@@ -1,0 +1,21 @@
+{
+  "name": "crime-scraper",
+  "version": "1.0.0",
+  "description": "Download crime data S3",
+  "main": "crime-scraper.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slooker/crime-scraper.git"
+  },
+  "dependencies": {
+    "request": "latest",
+    "proj4": "latest",
+    "nano": "latest"
+  },
+  "author": "Shawn Looker",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/slooker/crime-scraper/issues"
+  },
+  "homepage": "https://github.com/slooker/crime-scraper"
+}
