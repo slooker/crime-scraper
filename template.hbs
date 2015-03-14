@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body, #map-canvas { height: 90%; margin-top: 80px; padding: 0;}
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIAZW4zg8HWHJwIN242AFGSL-glwbMJ10"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+// I hate OAuth, and doing it in javascript without a server side component sucks. :(
+
+    // Take a look at Places API through Google
+    var locations = [];
+    var map;
+
+    $.ajax({
+      url: '/crimeLocations.json',
+    }).done(function(data) {
+      locations = data;
+      initialize();
+      locations.forEach(function(loc) {
+        createMarker(loc);
+      });
+    });
+
+    function createMarker(loc) {
+        console.log(loc);
+        var coords = { 'lat': loc.lat, 'lng': loc.lng };
+        return new google.maps.Marker({
+            position: coords,
+            map: map,
+            title: loc['code']
+        });
+    }
+
+
+    // Map stuff
+      function initialize() {
+        var myStyles =[{
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [
+                  { visibility: "off" }
+            ]
+        }];
+        var mapOptions = {
+          center: { 'lat': locations[0].lat, 'lng': locations[0].lng },
+          zoom: 17,
+          styles: myStyles
+        };
+
+
+        function createTitleWindow(loc) {
+            return new google.maps.InfoWindow({
+                content: "<span>"+loc.title+"</span>"
+            });    
+        }
+
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        for (var i = 0; i < locations.length; i++) {
+            var loc = locations[i];
+
+            var marker = createMarker(loc);
+            
+            var titlewindow = createTitleWindow(loc);
+
+            // Mouseover event for showing the title
+            google.maps.event.addListener(marker, 'mouseover', (function(thisWindow, thisMarker) {
+                return function() {
+                    thisWindow.open(map,thisMarker);
+                }
+            })(titlewindow,marker));
+
+            // Mouseout event for hiding the title
+            google.maps.event.addListener(marker, 'mouseout', (function(thisWindow, thisMarker) {
+                return function() {
+                    thisWindow.close(map,thisMarker);
+                }
+            })(titlewindow,marker));
+
+            // Click event for showing the description
+            // TODO: Change this to load yelp reviews
+            google.maps.event.addListener(marker, 'click', (function(thisWindow, thisMarker, myLoc) {
+                // Also trigger list of left nav options
+/*
+                var leftNav = document.getElementsByClassName('leftNav')[0];
+                var navLink = generateLocationLink(myLoc);
+                leftNav.appendChild(navLink);
+                console.log(navLink);
+                $(navLink).click(function() {
+                    console.log("Clicked");
+                    console.log(myLoc);
+                    fetch_data(myLoc, map, thisMarker, thisWindow);
+                });
+*/
+
+                
+                return function() {
+                    thisWindow.close(map,thisMarker);
+
+                    fetch_data(myLoc, map, thisMarker, thisWindow);
+                }
+            })(titlewindow, marker, loc));
+        }
+    }
+    //google.maps.event.addDomListener(window, 'load', initialize);
+
+
+    </script>
+  </head>
+  <body>
+
+
+        <div id="map-canvas"></div>
+    
+  </body>
+</html>
+

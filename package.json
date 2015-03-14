@@ -10,7 +10,11 @@
   "dependencies": {
     "request": "latest",
     "proj4": "latest",
-    "nano": "latest"
+    "nano": "latest",
+    "hogan": "latest",
+    "hapi": "latest",
+    "sleep": "latest",
+    "nedb": "latest"
   },
   "author": "Shawn Looker",
   "license": "Apache 2.0",
