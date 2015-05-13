@@ -14,7 +14,8 @@
     "hogan": "latest",
     "hapi": "latest",
     "sleep": "latest",
-    "nedb": "latest"
+    "nedb": "latest",
+    "mongoose": "latest"
   },
   "author": "Shawn Looker",
   "license": "Apache 2.0",

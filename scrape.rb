@@ -16,7 +16,7 @@ def fetchData(url, filename)
   File.open(filename, 'w') { |file| file.write(res.body) }
 end
 
-for i in 1 .. 365
+for i in 1 .. 20
 #for i in 1 .. 3
   startDate = (now - i).strftime(dateFormat) + '+00:00:00'
   endDate = (now - i + 1).strftime(dateFormat) + '+23:59:00'
@@ -26,6 +26,7 @@ for i in 1 .. 365
   filename = "json/#{(now - i).strftime(fileDateFormat)}-#{(now - i + 1).strftime(fileDateFormat)}.json"
   if !File.exist?(filename) 
     fetchData(url, filename)
+    system('node add-to-db.js '+filename);
   end
 
 end
