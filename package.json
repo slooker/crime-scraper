@@ -10,8 +10,6 @@
   "dependencies": {
     "request": "latest",
     "proj4": "latest",
-    "nano": "latest",
-    "hogan": "latest",
     "hapi": "latest",
     "sleep": "latest",
     "nedb": "latest",
