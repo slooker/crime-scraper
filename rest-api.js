@@ -11,6 +11,28 @@ var Db = require('mongodb').Db,
 var server = new Hapi.Server();
 server.connection({ port: 9000 });
 
+server.route({ 
+  method: 'GET',
+  path: '/getAll/startDate/{startDate}/endDate/{endDate}',
+  handler: function(request, reply) {
+    MongoClient.connect("mongodb://localhost/crime-data", function(err, db) {
+      database = db;
+      var startDate = new Date(request.params.startDate);
+      var endDate = new Date(request.params.endDate);
+      if(err) throw err;
+      var collection = db.collection('incidents');
+      collection.find({
+        dateReported: {
+          $gte: startDate,
+          $lte: endDate 
+        }
+      }).toArray(function(err, results) {
+        reply(results);
+      });
+    });
+  }
+});
+
 server.route({
   method: 'GET',
   path: '/lat/{lat}/lng/{lng}/distance/{distance}',
