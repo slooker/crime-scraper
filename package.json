@@ -8,12 +8,13 @@
     "url": "git://github.com/slooker/crime-scraper.git"
   },
   "dependencies": {
-    "request": "latest",
-    "proj4": "latest",
     "hapi": "latest",
-    "sleep": "latest",
+    "moment": "^2.10.6",
+    "mongoose": "latest",
     "nedb": "latest",
-    "mongoose": "latest"
+    "proj4": "latest",
+    "request": "latest",
+    "sleep": "latest"
   },
   "author": "Shawn Looker",
   "license": "Apache 2.0",
