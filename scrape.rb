@@ -24,10 +24,10 @@ for i in 1 .. 20
   url = "#{baseUrl}#{dateUrl}"
 
   filename = "json/#{(now - i).strftime(fileDateFormat)}-#{(now - i + 1).strftime(fileDateFormat)}.json"
-  if !File.exist?(filename) 
+#  if !File.exist?(filename) 
     fetchData(url, filename)
     system('node add-to-db.js '+filename);
-  end
+#  end
 
 end
 

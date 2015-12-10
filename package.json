@@ -14,7 +14,8 @@
     "nedb": "latest",
     "proj4": "latest",
     "request": "latest",
-    "sleep": "latest"
+    "sleep": "latest",
+    "throng": "^1.0.1"
   },
   "author": "Shawn Looker",
   "license": "Apache 2.0",
