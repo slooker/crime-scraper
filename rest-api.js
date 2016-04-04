@@ -13,6 +13,31 @@ server.connection({ port: 9000 });
 
 server.route({ 
   method: 'GET',
+  path: '/getAll',
+  handler: function(request, reply) {
+    MongoClient.connect("mongodb://localhost/crime-data", function(err, db) {
+      database = db;
+      if(err) throw err;
+      var collection = db.collection('incidents');
+      collection.find({ }).toArray(function(err, results) {
+        var incidents = [];
+        for (var i = 0; i < results.length; i++) {
+          var result = results[i];
+          var loc = result.loc.coordinates;
+          var lat = loc[1];
+          var lng = loc[0];
+          result.lat = lat;
+          result.lng = lng;
+          incidents.push(result);
+        }
+        reply(incidents);
+      });
+    });
+  }
+});
+
+server.route({ 
+  method: 'GET',
   path: '/getAll/startDate/{startDate}/endDate/{endDate}',
   handler: function(request, reply) {
     MongoClient.connect("mongodb://localhost/crime-data", function(err, db) {
